@@ -2,6 +2,7 @@ import { fetchMovieCredits } from 'Api';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import { CastUl, CastLi, Img, Text } from './Cast.styled';
 
 export const Cast = () => {
   const [cast, setCast] = useState([]);
@@ -26,10 +27,10 @@ export const Cast = () => {
   return (
     <>{isLoading && <div>LOADING...</div>}
       {cast && cast.length > 0 ? (
-        <ul>
+        <CastUl>
           {cast.map(({ id, character, name, profile_path }) => (
-            <li key={id}>
-              <img
+            <CastLi key={id}>
+              <Img
                 src={
                     profile_path
                       ? `https://image.tmdb.org/t/p/w500/${profile_path}`
@@ -37,13 +38,13 @@ export const Cast = () => {
                   }
                 alt={name}
               />
-              <p>Name: {name}</p>
-              <p>Character: {character}</p>
-            </li>
+              <Text>Name: {name}</Text>
+              <Text>Character: {character}</Text>
+            </CastLi>
           ))}
-        </ul>
+        </CastUl>
       ) : (
-        <p>We do not know thees Actors</p>
+        <Text>We do not know thees Actors</Text>
       )}
     </>
   );

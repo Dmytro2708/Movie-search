@@ -1,7 +1,9 @@
 import { fetchMovies } from 'Api';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useSearchParams, useLocation, Link } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { MovieUl, MovieLi, Link, Img, MovieTitle } from '../Home/HomePage.styled';
+import { Form, Label, Input, Button } from './MoviesPage.styled';
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -40,24 +42,24 @@ export default function MoviesPage() {
   return (
     <>
       <div>
-        <form onSubmit={searchHandler}>
+        <Form onSubmit={searchHandler}>
           <div>
-            <input type="text" name="query" autoComplete="off" placeholder="" />
-            <label>Search movies</label>
-            <button type="submit">
+            <Label>Search movies</Label>
+            <Input type="text" name="query" autoComplete="off" placeholder="" />
+             <Button type="submit">
               <span>Search</span>
-            </button>
+            </Button>
           </div>
-        </form>
+        </Form>
       </div>
       {isLoading && <div>LOADING...</div>}
       {movies.length > 0 && (
-        <ul>
+        <MovieUl>
           {movies.map(({ id, original_title, poster_path }) => {
             return (
-              <li key={id}>
+              <MovieLi key={id}>
                 <Link to={`/movies/${id}`} state={{ from: location }}>
-                  <img
+                  <Img
                     src={
                       poster_path
                         ? `https://image.tmdb.org/t/p/w500/${poster_path}`
@@ -65,12 +67,12 @@ export default function MoviesPage() {
                     }
                     alt={original_title}
                   />
-                  <p>{original_title}</p>
+                  <MovieTitle>{original_title}</MovieTitle>
                 </Link>
-              </li>
+              </MovieLi>
             );
           })}
-        </ul>
+        </MovieUl>
       )}
     </>
   );

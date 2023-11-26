@@ -1,14 +1,23 @@
-import {
-  Outlet,
-  useLocation,
-  useParams,
-  Link,
-  NavLink,
-} from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { fetchMovieDetails } from 'Api';
 import toast from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa6';
+import {
+  GoBackWrapp,
+  GoBackLink,
+  Wrapper,
+  Img,
+  InfoWrapp,
+  MovieTitle,
+  Title,
+  GenresUl,
+  GenreLi,
+  AddInfoTitle,
+  List,
+  ListItem,
+  StyledNavLink
+} from './MovieDetailsPage.styled';
 
 export default function MovieDetailsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,17 +48,17 @@ export default function MovieDetailsPage() {
     <>
       {isLoading && <div>LOADING...</div>}
 
-      <div>
-        <Link to={goBack}>
+      <GoBackWrapp>
+        <GoBackLink to={goBack}>
           <FaArrowLeft />
           Go Back
-        </Link>
-      </div>
+        </GoBackLink>
+      </GoBackWrapp>
 
       <div>
         {movie && (
-          <div>
-            <img
+          <Wrapper>
+            <Img
               src={
                 movie.poster_path
                   ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
@@ -57,38 +66,38 @@ export default function MovieDetailsPage() {
               }
               alt={movie.original_title}
             />
-            <div>
-              <h1>{movie.original_title}</h1>
+            <InfoWrapp>
+              <MovieTitle>{movie.original_title}</MovieTitle>
               <p>User score: {movie.vote_average}</p>
               <div>
-                <h2>Overview</h2>
+                <Title>Overview</Title>
                 <p>{movie.overview}</p>
               </div>
               <div>
-                <h2>Genres</h2>
-                <ul>
+                <Title>Genres</Title>
+                <GenresUl>
                   {movie.genres &&
                     movie.genres.map(genre => (
-                      <li key={genre.id}>{genre.name}</li>
+                      <GenreLi key={genre.id}>{genre.name}</GenreLi>
                     ))}
-                </ul>
+                </GenresUl>
               </div>
-            </div>
-          </div>
+            </InfoWrapp>
+          </Wrapper>
         )}
       </div>
       <div>
-        <h2>Additional information</h2>
-        <ul>
-          <li>
-            <NavLink to="cast">Cast</NavLink>
-          </li>
-          <li>
-            <NavLink to="reviews">Reviews</NavLink>
-          </li>
-        </ul>
+        <AddInfoTitle>Additional information</AddInfoTitle>
+        <List>
+          <ListItem>
+            <StyledNavLink to="cast">Cast</StyledNavLink>
+          </ListItem>
+          <ListItem>
+            <StyledNavLink to="reviews">Reviews</StyledNavLink>
+          </ListItem>
+        </List>
       </div>
       <Outlet />
     </>
   );
-};
+}

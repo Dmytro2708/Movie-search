@@ -1,23 +1,24 @@
 import { GlobalStyle } from 'components/GlobalStyle';
 import { Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { AppContainer, Header, NavUl, Link, } from './AppLayout.styled';
 
 export const AppLayout = () => {
   return (
-    <div>
-      <header>
+    <AppContainer>
+      <Header>
         <nav>
-          <ul>
+          <NavUl>
             <li>
               <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/movies">Movies</Link>
             </li>
-          </ul>
+          </NavUl>
         </nav>
-      </header>
+      </Header>
       <main>
         <Suspense fallback={<div>LOADING...</div>}>
           <Outlet />
@@ -26,6 +27,6 @@ export const AppLayout = () => {
 
       <GlobalStyle />
       <Toaster />
-    </div>
+    </AppContainer>
   );
 };

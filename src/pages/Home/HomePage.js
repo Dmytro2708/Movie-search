@@ -1,8 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { fetchTrend } from 'Api';
 import { useEffect, useState } from 'react';
-
 import toast from 'react-hot-toast';
+import { Title, MovieUl, MovieLi, Link, Img, MovieTitle } from './HomePage.styled';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,14 +26,14 @@ export default function HomePage() {
 
   return (
     <>
-      <h1>Trending today</h1>
+      <Title>Trending today</Title>
       {isLoading && <div>LOADING...</div>}
-      <ul>
+      <MovieUl>
         {trendings.map(({ id, original_title, poster_path }) => {
           return (
-            <li key={id}>
+            <MovieLi key={id}>
               <Link to={`/movies/${id}`} state={{ from: location }}>
-                <img
+                <Img
          src={
           poster_path
             ? `https://image.tmdb.org/t/p/w500/${poster_path}`
@@ -41,12 +41,12 @@ export default function HomePage() {
         }
           alt={original_title}
         />
-                <p>{original_title}</p>
+                <MovieTitle>{original_title}</MovieTitle>
               </Link>
-            </li>
+            </MovieLi>
           );
         })}
-      </ul>
+      </MovieUl>
     </>
   );
 };

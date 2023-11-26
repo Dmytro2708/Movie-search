@@ -2,6 +2,7 @@ import { fetchMovieReviews } from 'Api';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import { ReviewsLi, Author } from './Reviews.styled';
 
 export const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -29,10 +30,10 @@ export const Reviews = () => {
       {reviews && reviews.length > 0 ? (
         <ul>
           {reviews.map(({ author, id, content }) => (
-            <li key={id}>
-              <h2>Author: {author}</h2>
+            <ReviewsLi key={id}>
+              <Author>Author: {author}</Author>
               <p>{content}</p>
-            </li>
+            </ReviewsLi>
           ))}
         </ul>
       ) : (
